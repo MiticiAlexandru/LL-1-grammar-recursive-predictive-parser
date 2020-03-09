@@ -1,0 +1,30 @@
+************
+Language
+************
+
+Lambda symbol: E
+Start symbol: ~
+Terminals: +; ~; *; id; (; ); 
+Non-terminals: E; E'; T; T'; F; 
+Productions: E -> T E'; E' -> + T E'; E' -> ~; T -> F T'; T' -> * F T'; T' -> ~; F -> id; F -> ( E ); 
+
+************
+First Follow Table
+************
+
+Symbol: E; First = {id; (; }; Follow = {$; ); }
+Symbol: E'; First = {+; ~; }; Follow = {$; ); }
+Symbol: T; First = {id; (; }; Follow = {+; $; ); }
+Symbol: T'; First = {*; ~; }; Follow = {+; $; ); }
+Symbol: F; First = {id; (; }; Follow = {*; +; $; ); }
+
+************
+Parsing Table
+************
+
+            +; *; id; (; ); $; 
+E:          null; null; E -> T E'; E -> T E'; null; null; 
+E':          E' -> + T E'; null; null; null; E' -> ~; E' -> ~; 
+T:          null; null; T -> F T'; T -> F T'; null; null; 
+T':          T' -> ~; T' -> * F T'; null; null; T' -> ~; T' -> ~; 
+F:          null; null; F -> id; F -> ( E ); null; null; 
